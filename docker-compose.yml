@@ -1,0 +1,50 @@
+version: '2'
+networks:
+  bigez:
+    driver: bridge
+services:
+  bigez-backend:
+    build:
+      context: ./backend/application
+      dockerfile: development.Dockerfile
+    volumes:
+      - ./backend/application:/application/code
+    networks:
+      - bigez
+    env_file:
+      - application.env
+      - application.secret.env
+    ports:
+      - 8080:8080
+    depends_on:
+      - database
+      - cache
+  bigez-frontend:
+    build:
+      context: ./frontend
+      dockerfile: development.Dockerfile
+    volumes:
+      - ./frontend:/application/code
+    networks:
+      - bigez
+    ports:
+      - 2000:2000
+      - 2002:2002
+    depends_on:
+      - bigez-backend
+  cache:
+   build: ./backend/cache
+   networks:
+    - bigez
+  database:
+    build: ./backend/database
+    networks:
+      - bigez
+  database-seed:
+    build:
+      context: ./backend/database/seed
+      dockerfile: Dockerfile
+    networks:
+      - bigez
+    depends_on:
+      - database
