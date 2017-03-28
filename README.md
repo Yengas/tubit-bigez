@@ -12,3 +12,6 @@ GMAIL_PASSWORD=eaasdxyqoaadrhal
 ```
 
 Not settings these parameters correctly may make the application behave strangely. After creating this file, all you need to do is run `docker-compose up` all necessary installations will be done and you will be able to reach the webserver at `localhost:2000` for the frontend and `localhost:8080` for the backend.
+
+### Note
+There is a problem with the mongodump/mongorestore that i couldn't resolve. Mongodump files i try to initialize in the backend docker-compose file are extracted from a working demo. However when the `docker-compose up` command is run, there is a bug that causes the database-seed operation to fail inconsistently(2 out of 10 times). I have wrote about this issue on backend repo [#1](https://github.com/Yengas/tubit-bigez-backend/issues/1). Until there is a solution to this, i will keep this repo with a docker image referenced to the seeded version of mongo, so it can work without any chance to fail.

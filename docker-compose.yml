@@ -37,14 +37,6 @@ services:
    networks:
     - bigez
   database:
-    build: ./backend/database
+    image: yengas/bigez-mongo-seeded:3.4.2
     networks:
       - bigez
-  database-seed:
-    build:
-      context: ./backend/database/seed
-      dockerfile: Dockerfile
-    networks:
-      - bigez
-    depends_on:
-      - database
